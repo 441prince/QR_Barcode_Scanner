@@ -3,6 +3,7 @@ package com.prince.QRandBarcodescanner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ public class EmailActivity extends AppCompatActivity {
 
     EditText inSubject, inBody;
     TextView txtEmailAddress;
+    String toAddress;
     Button btnSendEmail;
     Button btnScanBarcode;
     @Override
@@ -31,17 +33,17 @@ public class EmailActivity extends AppCompatActivity {
 
         if (getIntent().getStringExtra("email_address") != null) {
             txtEmailAddress.setText("Recipient : " + getIntent().getStringExtra("email_address"));
+            toAddress = getIntent().getStringExtra("email_address");
         }
 
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{txtEmailAddress.getText().toString()});
+                intent.setType("message/rfc822");  //need this to prompts email client only
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{toAddress});
                 intent.putExtra(Intent.EXTRA_SUBJECT, inSubject.getText().toString().trim());
                 intent.putExtra(Intent.EXTRA_TEXT, inBody.getText().toString().trim());
-
                 startActivity(Intent.createChooser(intent, "Send Email"));
             }
         });

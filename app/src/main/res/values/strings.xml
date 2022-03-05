@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">QR Barcode Scanner</string>
+    <string name="title_activity_text_view_scrolling">QR Barcode Scanner</string>
+    <string name="action_settings">Settings</string>
 </resources>
